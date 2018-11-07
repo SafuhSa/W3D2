@@ -1,6 +1,8 @@
 require 'sqlite3'
 require 'singleton'
 require_relative 'QuestionsDatabase'
+require_relative 'question_follows'
+
 class UsersDatabase < SQLite3::Database
 include Singleton
     def initialize
@@ -52,5 +54,19 @@ class Users
    def authored_replies
      Replies.find_by_user(self.id)
   end
-
+  
+  def followed_questions
+   # select 
+   # *
+   #  from
+   #   questions 
+   #   JOIN
+   #     question_follows ON question.id = question_follows.question_id
+   #   JOIN
+   #    users ON question_follows.user_id = users.id 
+   #  WHERE
+   #    question_follows.user_id = self.id
+   Question_follows.followed_questions_for_user_id(self.id)
+       
+  end
 end

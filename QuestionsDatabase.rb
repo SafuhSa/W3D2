@@ -54,6 +54,19 @@ class Questions
  def replies
    Replies.find_by_question_id(self.id)
 end 
+
+def followers
+  
+  # SELECT 
+  #   * 
+  #   FROM
+  #   users
+  #   JOIN 
+  #   question_follows ON question_follows.user_id = users.id
+  #     WHERE
+  #     question_follows.question_id = self.id
+  # 
+  Question_follows.followers_for_question_id(self.id)
 end
 
 

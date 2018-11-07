@@ -49,8 +49,15 @@ class Question_follows
       q_follow.map { |question| Questions.new(question) }
   end
   
+  def most_followed_question(n)
+  end
+  
+  
+  
   def initialize(options)
     @question_id = options['question_id']
     @user_id = options['user_id']
   end
+  
+  
 end
