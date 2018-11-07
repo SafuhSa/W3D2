@@ -19,6 +19,12 @@ class Questions
     data = QuestionsDatabase.instance.execute("SELECT * FROM questions")
    data.map { |datum| Questions.new(datum) }
  end
+ 
+ def self.most_followed(n)
+   x = Question_follows.most_followed_question(n)
+   Question.find_by_id(x.first)
+ end
+ 
  def self.find_by_id(id)
    question = QuestionsDatabase.instance.execute(<<-SQL, id)
    SELECT 

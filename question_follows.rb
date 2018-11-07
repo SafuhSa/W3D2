@@ -50,6 +50,16 @@ class Question_follows
   end
   
   def most_followed_question(n)
+    q_follow =  QuestionsDatabase.instance.execute(<<-SQL, n)
+    SELECT 
+      question_id,count(user_id)
+    FROM
+      question_follows
+    GROUP BY 
+      question_id
+    ORDER BY DESC LIMIT  ?
+      SQL
+      q_follow
   end
   
   
