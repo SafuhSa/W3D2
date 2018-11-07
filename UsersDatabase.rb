@@ -1,5 +1,6 @@
 require 'sqlite3'
 require 'singleton'
+require_relative 'QuestionsDatabase'
 class UsersDatabase < SQLite3::Database
 include Singleton
     def initialize
@@ -26,22 +27,30 @@ class Users
   SQL
   Users.new(user.first)
  end
- def self.find_by_name(name)
-   user = UsersDatabase.instance.execute(<<-SQL, name)
+ def self.find_by_name(fname,lname)
+   user = UsersDatabase.instance.execute(<<-SQL, fname,lname)
    SELECT 
     *
   FROM 
   users
   WHERE 
-  fname = ?
+  fname = ? and lname = ?
   SQL
   Users.new(user.first)
  end
  
-
- def initialize(options)
+  def initialize(options)
    @fname = options['fname']
    @lname = options['lname']
-   
- end
+  end
+ 
+   def authored_questions
+      Question.find_by_author_id(self.id)
+   end
+ 
+ 
+   def authored_replies
+     Replies.find_by_user(self.id)
+  end
+
 end

@@ -36,6 +36,24 @@ class Questions
    @author_id = options['author_id']
  end
  
+ def self.find_by_author(id)
+   question = QuestionsDatabase.instance.execute(<<-SQL, id)
+   SELECT 
+    *
+  FROM 
+    questions
+  WHERE 
+    author_id = ?
+  SQL
+  Questions.new(question.first)
+ end
+ 
+ def author
+   User.find_by_id(self.author_id)
+ end
+ def replies
+   Replies.find_by_question_id(self.id)
+end 
 end
 
 
